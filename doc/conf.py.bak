@@ -45,8 +45,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'BT-Manager'
-copyright = '2014, Liam Wickins'
+project = u'BT-Manager'
+copyright = u'2014, Liam Wickins'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -190,8 +190,8 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto/manual]).
 latex_documents = [('index', 'BT-Manager.tex',
-                    'BT-Manager Documentation',
-                    'Liam Wickins', 'manual'),
+                    u'BT-Manager Documentation',
+                    u'Liam Wickins', 'manual'),
                    ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -220,8 +220,8 @@ latex_documents = [('index', 'BT-Manager.tex',
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'bt-manager', 'BT-Manager Documentation',
-     ['Liam Wickins'], 1)
+    ('index', 'bt-manager', u'BT-Manager Documentation',
+     [u'Liam Wickins'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -235,8 +235,8 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [('index',
                       'BT-Manager',
-                      'BT-Manager Documentation',
-                      'Liam Wickins',
+                      u'BT-Manager Documentation',
+                      u'Liam Wickins',
                       'BT-Manager',
                       'A library for managing bluetooth devices using Python, Bluez and DBus.',  # noqa
                       'Miscellaneous'),

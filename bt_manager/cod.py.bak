@@ -1,4 +1,4 @@
-
+from __future__ import unicode_literals
 
 
 class BTCoD:
@@ -170,7 +170,7 @@ class BTCoD:
         Audio, Telephony, etc
         """
         major_service = []
-        for i in list(BTCoD._MAJOR_SERVICE_CLASS.keys()):
+        for i in BTCoD._MAJOR_SERVICE_CLASS.keys():
             if (self.cod & i):
                 major_service.append(BTCoD._MAJOR_SERVICE_CLASS[i])
         return major_service

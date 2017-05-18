@@ -1,7 +1,7 @@
+from __future__ import unicode_literals
 
-
-from .audio import BTAudio
-from .device import BTGenericDevice
+from audio import BTAudio
+from device import BTGenericDevice
 
 
 class BTHeadset(BTAudio):

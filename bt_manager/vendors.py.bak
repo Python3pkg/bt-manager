@@ -1,4 +1,4 @@
-
+from __future__ import unicode_literals
 
 VENDORS = {
     0x0000: 'Ericsson Technology Licensing',

@@ -1,7 +1,7 @@
+from __future__ import unicode_literals
 
-
-from .interface import BTInterface
-from .manager import BTManager
+from interface import BTInterface
+from manager import BTManager
 
 
 class BTAdapter(BTInterface):

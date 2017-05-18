@@ -1,9 +1,9 @@
-
+from __future__ import unicode_literals
 from xml.etree.ElementTree import XML
 import pprint
 
-from .serviceuuids import SERVICES
-from .attributes import ATTRIBUTES
+from serviceuuids import SERVICES
+from attributes import ATTRIBUTES
 
 
 class BTDiscoveryInfo:
@@ -25,7 +25,7 @@ class BTDiscoveryInfo:
     """
     def __init__(self, text):
         tree = XML(text)
-        rec = next(tree.iter())
+        rec = tree.iter().next()
         if (rec is not None):
             self._uuid = None
             self.__dict__ = self._parse_element(rec)

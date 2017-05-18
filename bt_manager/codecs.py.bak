@@ -1,4 +1,4 @@
-
+from __future__ import unicode_literals
 from collections import namedtuple
 from bt_manager import ffi
 
@@ -100,7 +100,7 @@ class SBCCodec:
                                     libraries=[b'rtpsbc'],
                                     ext_package=b'rtpsbc')
         except:
-            print('Exception:', sys.exc_info()[0])
+            print 'Exception:', sys.exc_info()[0]
 
         self.config = ffi.new('sbc_t *')
         self.ts = ffi.new('unsigned int *', 0)

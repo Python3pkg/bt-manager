@@ -1,4 +1,4 @@
-
+from __future__ import unicode_literals
 
 import readline  # noqa
 import bt_manager
@@ -11,42 +11,42 @@ from collections import namedtuple
 
 
 def dump_signal(signal, *args):
-    print('\n=========================================================')
-    print('>>>>>', signal, '<<<<<')
-    print(args)
-    print('=========================================================')
+    print '\n========================================================='
+    print '>>>>>', signal, '<<<<<'
+    print args
+    print '========================================================='
 
 
 def agent_event_handler(*args):
-    print('\n=========================================================')
-    print('Agent event:', args)
+    print '\n========================================================='
+    print 'Agent event:', args
     return True
 
 
 def agent_event_request_pin_code(event, device):
-    print('\n=========================================================')
-    print('Agent event:', event)
-    print('Device:', device)
-    print('Enter PIN 1234 on device')
+    print '\n========================================================='
+    print 'Agent event:', event
+    print 'Device:', device
+    print 'Enter PIN 1234 on device'
     return dbus.String('1234')
 
 
 def agent_event_request_pass_key(event, device):
-    print('\n=========================================================')
-    print('Agent event:', event)
-    print('Device:', device)
-    print('Using pass code 1234765')
+    print '\n========================================================='
+    print 'Agent event:', event
+    print 'Device:', device
+    print 'Using pass code 1234765'
     return dbus.UInt32('1234765')
 
 
 def device_created_ok(*args):
-    print('\n=========================================================')
-    print('New Device Paired:', args)
+    print '\n========================================================='
+    print 'New Device Paired:', args
 
 
 def device_created_error(*args):
-    print('\n=========================================================')
-    print('Pairing Error:', args)
+    print '\n========================================================='
+    print 'Pairing Error:', args
 
 
 def cmd_help(args):
@@ -55,51 +55,51 @@ def cmd_help(args):
     if (len(args)):
         cmd_list = [args.pop(0)]
     else:
-        cmd_list = list(cmd_table.keys())
+        cmd_list = cmd_table.keys()
 
     for i in cmd_list:
-        print(i, cmd_table[i].args, ":", cmd_table[i].desc)
+        print i, cmd_table[i].args, ":", cmd_table[i].desc
 
 
 def list_adapters(args):
-    print('=========================================================')
+    print '========================================================='
     try:
-        print(bt_manager.BTManager().list_adapters())
+        print bt_manager.BTManager().list_adapters()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def list_devices(args):
-    print('=========================================================')
+    print '========================================================='
     global adapter
 
     try:
-        print(adapter.list_devices())
+        print adapter.list_devices()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def adapter_info(args):
     global adapter
 
     try:
-        print('=========================================================')
-        print(adapter)
-        print('=========================================================')
+        print '========================================================='
+        print adapter
+        print '========================================================='
         cod = bt_manager.BTCoD(adapter.Class)
-        print('Vendor Name:', bt_manager.VENDORS.get(adapter.Vendor, 'Unknown'))
-        print('Device Class:', hex(adapter.Class))
-        print('Major Service Class:', str(cod.major_service_class))
-        print('Major Device Class:', str(cod.major_device_class))
-        print('Minor Device Class:', str(cod.minor_device_class))
-        print('=========================================================')
+        print 'Vendor Name:', bt_manager.VENDORS.get(adapter.Vendor, 'Unknown')
+        print 'Device Class:', hex(adapter.Class)
+        print 'Major Service Class:', str(cod.major_service_class)
+        print 'Major Device Class:', str(cod.major_device_class)
+        print 'Minor Device Class:', str(cod.minor_device_class)
+        print '========================================================='
         uuids = adapter.UUIDs
         for i in uuids:
             uuid = bt_manager.BTUUID(i)
-            print(bt_manager.SERVICES.get(uuid.uuid16, uuid))
-        print('=========================================================')
+            print bt_manager.SERVICES.get(uuid.uuid16, uuid)
+        print '========================================================='
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def adapter_get(args):
@@ -108,13 +108,13 @@ def adapter_get(args):
     else:
         name = None
 
-    print('=========================================================')
+    print '========================================================='
     global adapter
 
     try:
-        print(adapter.get_property(name=name))
+        print adapter.get_property(name=name)
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def adapter_set(args):
@@ -122,7 +122,7 @@ def adapter_set(args):
         name = args.pop(0)
         value = args.pop(0)
     else:
-        print('Error: Requires property name and value')
+        print 'Error: Requires property name and value'
         return
 
     global adapter
@@ -130,14 +130,14 @@ def adapter_set(args):
     try:
         adapter.set_property(name, value)
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def device_listen(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Requires device path')
+        print 'Error: Requires device path'
         return
 
     global services
@@ -149,14 +149,14 @@ def device_listen(args):
                                    None)
         services[dev_path] = device
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def device_rm(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Requires device path')
+        print 'Error: Requires device path'
         return
 
     global adapter
@@ -164,7 +164,7 @@ def device_rm(args):
     try:
         adapter.remove_device(dev_path)
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def device_get(args):
@@ -175,15 +175,15 @@ def device_get(args):
         else:
             name = None
     else:
-        print('Error: Requires device path')
+        print 'Error: Requires device path'
         return
 
     try:
         device = bt_manager.BTDevice(dev_path=dev_path)
-        print('=========================================================')
-        print(device.get_property(name=name))
+        print '========================================================='
+        print device.get_property(name=name)
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def device_set(args):
@@ -192,75 +192,75 @@ def device_set(args):
         name = args.pop(0)
         value = args.pop(0)
     else:
-        print('Error: Requires device path, property name and value')
+        print 'Error: Requires device path, property name and value'
         return
 
     try:
         device = bt_manager.BTDevice(dev_path=dev_path)
         device.set_property(name, value)
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def device_info(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         device = bt_manager.BTDevice(dev_path=dev_path)
-        print('=========================================================')
-        print(device)
-        print('=========================================================')
+        print '========================================================='
+        print device
+        print '========================================================='
         cod = bt_manager.BTCoD(device.Class)
-        print('Vendor Name:', bt_manager.VENDORS.get(device.Vendor, 'Unknown'))
-        print('Device Class:', hex(device.Class))
-        print('Major Service Class:', str(cod.major_service_class))
-        print('Major Device Class:', str(cod.major_device_class))
-        print('Minor Device Class:', str(cod.minor_device_class))
-        print('=========================================================')
+        print 'Vendor Name:', bt_manager.VENDORS.get(device.Vendor, 'Unknown')
+        print 'Device Class:', hex(device.Class)
+        print 'Major Service Class:', str(cod.major_service_class)
+        print 'Major Device Class:', str(cod.major_device_class)
+        print 'Minor Device Class:', str(cod.minor_device_class)
+        print '========================================================='
         uuids = device.UUIDs
         for i in uuids:
             uuid = bt_manager.BTUUID(i)
-            print(bt_manager.SERVICES.get(uuid.uuid16, uuid))
-        print('=========================================================')
+            print bt_manager.SERVICES.get(uuid.uuid16, uuid)
+        print '========================================================='
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def device_disconnect(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         device = bt_manager.BTDevice(dev_path=dev_path)
         device.disconnect()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def device_discovery(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         device = bt_manager.BTDevice(dev_path=dev_path)
         discovery = device.discover_services()
         if (discovery):
-            for rec in list(discovery.keys()):
-                print('=========================================================')  # noqa
-                print(bt_manager.BTDiscoveryInfo(discovery[rec]))
-        print('=========================================================')
+            for rec in discovery.keys():
+                print '========================================================='  # noqa
+                print bt_manager.BTDiscoveryInfo(discovery[rec])
+        print '========================================================='
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def device_create(args):
@@ -271,7 +271,7 @@ def device_create(args):
         path = args.pop(0)
         dev_id = args.pop(0)
     else:
-        print('Error: Must provide agent path and device address')
+        print 'Error: Must provide agent path and device address'
         return
 
     try:
@@ -280,7 +280,7 @@ def device_create(args):
                                      device_created_ok,
                                      device_created_error)
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def discovery_start(args):
@@ -290,7 +290,7 @@ def discovery_start(args):
     try:
         adapter.start_discovery()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def discovery_stop(args):
@@ -300,7 +300,7 @@ def discovery_stop(args):
     try:
         adapter.stop_discovery()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def agent_start(args):
@@ -310,7 +310,7 @@ def agent_start(args):
     if (len(args)):
         path = args.pop(0)
     else:
-        print('Error: Must provide agent path e.g., /test/agent')
+        print 'Error: Must provide agent path e.g., /test/agent'
         return
 
     try:
@@ -324,7 +324,7 @@ def agent_start(args):
                                    cb_notify_on_cancel=agent_event_handler)
         services[path] = agent
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def agent_stop(args):
@@ -334,14 +334,14 @@ def agent_stop(args):
     if (len(args)):
         path = args.pop(0)
     else:
-        print('Error: Must provide agent path e.g., /test/agent')
+        print 'Error: Must provide agent path e.g., /test/agent'
         return
 
     try:
         adapter.unregister_agent(path)
         services[path].remove_from_connection()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def exit_cleanup(args):
@@ -352,172 +352,172 @@ def sink_info(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         sink = bt_manager.BTAudioSink(dev_path=dev_path)
-        print('=========================================================')
-        print(sink)
+        print '========================================================='
+        print sink
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def sink_connect(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         sink = bt_manager.BTAudioSink(dev_path=dev_path)
         sink.connect()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def sink_disconnect(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         sink = bt_manager.BTAudioSink(dev_path=dev_path)
         sink.disconnect()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def input_info(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         ip = bt_manager.BTInput(dev_path=dev_path)
-        print('=========================================================')
-        print(ip)
+        print '========================================================='
+        print ip
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def input_connect(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         ip = bt_manager.BTInput(dev_path=dev_path)
         ip.connect()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def input_disconnect(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         sink = bt_manager.BTInput(dev_path=dev_path)
         sink.disconnect()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def source_info(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         source = bt_manager.BTAudioSource(dev_path=dev_path)
-        print('=========================================================')
-        print(source)
+        print '========================================================='
+        print source
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def source_connect(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         source = bt_manager.BTAudioSource(dev_path=dev_path)
         source.connect()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def source_disconnect(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         source = bt_manager.BTAudioSource(dev_path=dev_path)
         source.disconnect()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def control_info(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         ctrl = bt_manager.BTControl(dev_path=dev_path)
-        print('=========================================================')
-        print(ctrl)
+        print '========================================================='
+        print ctrl
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def control_vol_up(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         ctrl = bt_manager.BTControl(dev_path=dev_path)
         ctrl.volume_up()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def control_vol_down(args):
     if (len(args)):
         dev_path = args.pop(0)
     else:
-        print('Error: Must specify device path')
+        print 'Error: Must specify device path'
         return
 
     try:
         ctrl = bt_manager.BTControl(dev_path=dev_path)
         ctrl.volume_down()
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def media_sbc_sink_start(args):
@@ -531,18 +531,18 @@ def media_sbc_sink_start(args):
         else:
             dev_path = None
     else:
-        print('Error: Must provide endpoint path e.g., /test/endpoint/sbc0')
+        print 'Error: Must provide endpoint path e.g., /test/endpoint/sbc0'
         return
 
     try:
         ep = bt_manager.SBCAudioSink(path=path, dev_path=dev_path)
-        print('=========================================================')
-        print(repr(ep))
+        print '========================================================='
+        print repr(ep)
         services[path] = ep
         media = bt_manager.BTMedia()
         media.register_endpoint(path, ep.get_properties())
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def media_decode_handler(args):
@@ -567,7 +567,7 @@ def media_decode(args):
         path = args.pop(0)
         filename = args.pop(0)
     else:
-        print('Error: Must provide endpoint path e.g., /test/endpoint/sbc0 and audio storage filename')  # noqa
+        print 'Error: Must provide endpoint path e.g., /test/endpoint/sbc0 and audio storage filename'  # noqa
         return
 
     fd = open(filename, 'wb+')
@@ -583,7 +583,7 @@ def media_encode(args):
         path = args.pop(0)
         filename = args.pop(0)
     else:
-        print('Error: Must provide endpoint path e.g., /test/endpoint/sbc0 and audio storage filename')  # noqa
+        print 'Error: Must provide endpoint path e.g., /test/endpoint/sbc0 and audio storage filename'  # noqa
         return
 
     fd = open(filename, 'rb')
@@ -602,18 +602,18 @@ def media_sbc_source_start(args):
         else:
             dev_path = None
     else:
-        print('Error: Must provide endpoint path e.g., /test/endpoint/sbc0')
+        print 'Error: Must provide endpoint path e.g., /test/endpoint/sbc0'
         return
 
     try:
         ep = bt_manager.SBCAudioSource(path=path, dev_path=dev_path)
-        print('=========================================================')
-        print(repr(ep))
+        print '========================================================='
+        print repr(ep)
         services[path] = ep
         media = bt_manager.BTMedia()
         media.register_endpoint(path, ep.get_properties())
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 def media_stop(args):
@@ -623,7 +623,7 @@ def media_stop(args):
     if (len(args)):
         path = args.pop(0)
     else:
-        print('Error: Must provide endpoint path e.g., /test/endpoint/sbc0')
+        print 'Error: Must provide endpoint path e.g., /test/endpoint/sbc0'
         return
 
     try:
@@ -634,7 +634,7 @@ def media_stop(args):
         media = bt_manager.BTMedia()
         media.unregister_endpoint(path)
     except dbus.exceptions.DBusException:
-        print('Unable to complete:', sys.exc_info())
+        print 'Unable to complete:', sys.exc_info()
 
 
 CmdEntry = namedtuple('CmdEntry', 'func desc args')
@@ -758,7 +758,7 @@ def invoke_bt_command(text):
     if (cmd_entry):
         cmd_entry.func(args)
     else:
-        print('Error: Command "%s" was not recognized.' % cmd)
+        print 'Error: Command "%s" was not recognized.' % cmd
 
 
 def timeout_handler(signum, frame):
@@ -789,11 +789,11 @@ try:
                                 bt_manager.BTAdapter.SIGNAL_PROPERTY_CHANGED,
                                 None)
 except dbus.exceptions.DBusException:
-    print('Unable to complete:', sys.exc_info())
+    print 'Unable to complete:', sys.exc_info()
 
 services = {}
 
 # Main command processing loop
 while True:
-    text = input("BT> ")
+    text = raw_input("BT> ")
     invoke_bt_command(text)

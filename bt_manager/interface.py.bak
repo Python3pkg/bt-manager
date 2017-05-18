@@ -1,10 +1,10 @@
-
+from __future__ import unicode_literals
 
 import dbus
 import types
 import pprint
 
-from .exceptions import BTSignalNameNotRecognisedException
+from exceptions import BTSignalNameNotRecognisedException
 
 
 def translate_to_dbus_type(typeof, value):
@@ -17,7 +17,7 @@ def translate_to_dbus_type(typeof, value):
     :return: 'value' converted to type 'typeof'
     :rtype: typeof
     """
-    if ((isinstance(value, str) or
+    if ((isinstance(value, types.UnicodeType) or
          isinstance(value, str)) and typeof is not dbus.String):
         # FIXME: This is potentially dangerous since it evaluates
         # a string in-situ
@@ -102,7 +102,7 @@ class BTInterface(BTSimpleInterface):
         BTSimpleInterface.__init__(self, path, addr)
         self._signals = {}
         self._signal_names = []
-        self._properties = list(self._interface.GetProperties().keys())
+        self._properties = self._interface.GetProperties().keys()
         self._register_signal_name(BTInterface.SIGNAL_PROPERTY_CHANGED)
 
     def _register_signal_name(self, name):
